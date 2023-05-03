@@ -7,7 +7,7 @@
     "url": "git+https://github.com/sehun0219/Youtube-reloaded.git"
   },
   "scripts": {
-    "dev": "nodemon --exec babel-node src/server.js"
+    "dev": "nodemon --exec babel-node src/init.js"
   },
   "author": "Cayde <cloudnine0219@gmail.com>",
   "license": "ISC",
