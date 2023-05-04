@@ -2,15 +2,24 @@
 // 내 애플리케이션에 필요한 데이터베이스 모양이 무엇인가 생각해놔야함 그걸하는 곳
 
 import mongoose from "mongoose";
+
 const videoSchema = new mongoose.Schema({
-  title: String,
-  description: String,
-  createdAt: Date,
-  hashtags: [{ type: String }],
+  title: { type: String, required: true, trim: true, maxLength: 80 },
+  description: { type: String, required: true, trim: true, minLength: 5 },
+  createdAt: { type: Date, required: true, default: Date.now },
+  hashtags: [{ type: String, trim: true }],
   meta: {
-    views: Number,
-    rating: Number,
+    views: { type: Number, default: 0, required: true },
+    rating: { type: Number, default: 0, required: true },
   },
+});
+
+// middleware should be placed before model
+
+videoSchema.static("formatHashtags", function (hashtags) {
+  return hashtags
+    .split(",")
+    .map((word) => (word.startsWith("#") ? word : `#${word}`));
 });
 
 const Video = mongoose.model("Video", videoSchema);
